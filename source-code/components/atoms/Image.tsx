@@ -5,21 +5,28 @@
  *   - Lazy loading (default loading="lazy")
  *   - Aspect-ratio container for CLS prevention
  *   - Accessible alt text enforcement
- *   - Graceful fallback on error
+ *   - Two-step graceful fallback:
+ *       1st failure → retries with raw GitHub URL
+ *       2nd failure → shows "Image unavailable" placeholder
  *   - Blur placeholder for perceived performance
- *
- * Usage: All images in Heritage Cards, hero sections, team/about sections.
- * Breakpoints:
- *   - Fills its container at all breakpoints
- *   - Aspect ratio maintained via pt-[<ratio>] technique
- *   - Explicit sizes prop for responsive image srcset
  */
 
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NextImage, { ImageProps as NextImageProps } from "next/image";
 import { cn } from "@/lib/utils";
+
+// ── GitHub raw fallback base URL ──────────────────────────────────────────────
+// If the local /images/... path fails (e.g. on GitHub Pages with basePath),
+// we automatically retry using the raw GitHub URL of the same file.
+const GITHUB_RAW_BASE =
+  "https://github.com/trishania/Pangasinan-Heritage-Digital-Showcase/blob/main/source-code/public";
+
+function toGithubRaw(src: string): string {
+  // src is e.g. "/images/banaan-provincial-museum.png"
+  return `${GITHUB_RAW_BASE}${src}?raw=true`;
+}
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 export type AspectRatio = "1/1" | "4/3" | "16/9" | "3/2" | "2/3" | "21/9";
@@ -48,19 +55,6 @@ const aspectMap: Record<AspectRatio, string> = {
 };
 
 // ── Component ─────────────────────────────────────────────────────────────────
-/**
- * HeritageImage Atom
- *
- * @example
- * <HeritageImage
- *   src="/images/hundred-islands.jpg"
- *   alt="Aerial view of Hundred Islands National Park, Alaminos, Pangasinan"
- *   aspectRatio="16/9"
- *   fill
- *   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
- *   caption="Hundred Islands National Park, Alaminos"
- * />
- */
 export const HeritageImage: React.FC<HeritageImageProps> = ({
   alt,
   aspectRatio    = "16/9",
@@ -70,16 +64,35 @@ export const HeritageImage: React.FC<HeritageImageProps> = ({
   className,
   sizes          = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw",
   priority,
+  src,
   ...props
 }) => {
-  const [hasError, setHasError] = useState(false);
+  const originalSrc = src as string;
+  const [currentSrc, setCurrentSrc] = useState<string>(originalSrc);
+  const [hasError, setHasError]   = useState(false);
+
+  // Reset state if the src prop changes (different card)
+  useEffect(() => {
+    setCurrentSrc(originalSrc);
+    setHasError(false);
+  }, [originalSrc]);
+
+  const handleError = () => {
+    if (currentSrc === originalSrc) {
+      // First failure — retry with raw GitHub URL
+      setCurrentSrc(toGithubRaw(originalSrc));
+    } else {
+      // Second failure — show unavailable placeholder
+      setHasError(true);
+    }
+  };
 
   return (
     <figure className={cn("w-full", wrapperClassName)}>
       {/* Aspect-ratio container prevents CLS */}
       <div className={cn("relative w-full overflow-hidden", aspectMap[aspectRatio])}>
         {hasError ? (
-          // Graceful fallback
+          // Final graceful fallback
           <div
             className="absolute inset-0 flex items-center justify-center"
             style={{ background: fallbackBg }}
@@ -90,9 +103,10 @@ export const HeritageImage: React.FC<HeritageImageProps> = ({
           </div>
         ) : (
           <NextImage
+            key={currentSrc}   // Forces re-mount when src changes
+            src={currentSrc}
             alt={alt}
             fill
-            // Next.js forbids setting loading="lazy" when priority is true
             loading={priority ? undefined : "lazy"}
             priority={priority}
             sizes={sizes}
@@ -100,7 +114,8 @@ export const HeritageImage: React.FC<HeritageImageProps> = ({
               "object-cover transition-transform duration-500 group-hover:scale-105",
               className,
             )}
-            onError={() => setHasError(true)}
+            onError={handleError}
+            unoptimized
             {...props}
           />
         )}
@@ -117,3 +132,4 @@ export const HeritageImage: React.FC<HeritageImageProps> = ({
 };
 
 export default HeritageImage;
+
