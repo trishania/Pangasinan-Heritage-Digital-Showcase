@@ -98,7 +98,7 @@ export const HeroSection: React.FC = () => {
           </Body>
 
           {/* CTA group */}
-          <div className="flex flex-col xs:flex-row gap-3 justify-center pt-2">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
             <Button
               variant="primary"
               size="lg"
@@ -106,7 +106,7 @@ export const HeroSection: React.FC = () => {
               onClick={() =>
                 document.getElementById("sites")?.scrollIntoView({ behavior: "smooth" })
               }
-              className="shadow-lg hover:shadow-xl transition-shadow"
+              className="shadow-lg hover:shadow-xl transition-shadow w-full sm:w-auto"
             >
               Explore Heritage Sites
             </Button>
@@ -117,7 +117,7 @@ export const HeroSection: React.FC = () => {
               onClick={() =>
                 document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })
               }
-              className="text-primary-800 border-primary-300 hover:bg-primary-50/60"
+              className="text-primary-800 border-primary-300 hover:bg-primary-50/60 w-full sm:w-auto"
             >
               Learn More
             </Button>

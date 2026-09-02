@@ -3,6 +3,7 @@ const nextConfig = {
   // Enable static export for JAMstack/Vercel/Netlify deployment
   output: "export",
   basePath: "/Pangasinan-Heritage-Digital-Showcase",
+  assetPrefix: "/Pangasinan-Heritage-Digital-Showcase",
 
   // Optimize images (formats automatically handled for static export)
   images: {
