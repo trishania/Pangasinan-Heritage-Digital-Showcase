@@ -1,0 +1,173 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS Custom Properties — Strawberry Matcha Latte Palette ──────────── */
+:root {
+  /* ── Core palette (light → dark) ── */
+  --cream-white:   #F3E7D7;  /* Main background */
+  --soft-blush:    #F7DED3;  /* Pink gradient */
+  --pastel-pink:   #F3C9C0;  /* Stronger pink areas */
+  --light-sage:    #D4DCAE;  /* Soft green transition */
+  --warm-ivory:    #E6E2C4;  /* Creamy transition */
+  --pastel-green:  #ADC981;  /* Main green */
+  --fresh-green:   #98C171;  /* Green highlight */
+  --medium-sage:   #80AF65;  /* Deeper green */
+  --muted-green:   #619853;  /* Darkest green */
+
+  /* Brand roles */
+  --color-primary:     #619853;  /* Muted Green — main brand */
+  --color-primary-dk:  #80AF65;  /* Medium Sage — hover */
+  --color-accent:      #F3C9C0;  /* Pastel Pink */
+  --color-accent-dk:   #F7DED3;  /* Soft Blush */
+  --color-sage:        #ADC981;  /* Pastel Green */
+  --color-sage-dk:     #98C171;  /* Fresh Green */
+  --color-cream:       #F3E7D7;  /* Cream White */
+  --color-cream-dk:    #E6E2C4;  /* Warm Ivory */
+
+  /* Semantic surface tokens */
+  --color-surface:     #F3E7D7;  /* Cream White background */
+  --color-surface-alt: #F7DED3;  /* Soft Blush alt surface */
+  --color-border:      #E6E2C4;  /* Warm Ivory border */
+  --color-text:        #2e2c1e;
+  --color-text-muted:  #5e5b4a;
+  --color-text-subtle: #837f68;
+
+  /* Typography scale */
+  --font-sans:    "Inter", system-ui, sans-serif;
+  --font-display: "Playfair Display", Georgia, serif;
+
+  /* Focus ring */
+  --focus-ring: 0 0 0 3px rgba(97,152,83,0.45);
+}
+
+/* ── Base Layer ──────────────────────────────────────────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* WCAG 2.1 AA — visible focus indicator */
+  :focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+    border-radius: 4px;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    line-height: 1.2;
+    font-weight: 700;
+  }
+
+  /* Skip-to-content for keyboard users (WCAG 2.4.1) */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    background: var(--color-primary);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    z-index: 9999;
+    font-weight: 600;
+    transition: top 0.2s;
+  }
+  .skip-link:focus {
+    top: 0;
+  }
+}
+
+/* ── Component Layer ─────────────────────────────────────────────────────── */
+@layer components {
+  /* Container utility */
+  .container-site {
+    @apply mx-auto w-full px-4 sm:px-6 lg:px-8 max-w-7xl;
+  }
+
+  /* Card base */
+  .card {
+    @apply bg-white rounded-2xl shadow-card overflow-hidden transition-all duration-300;
+  }
+
+  /* Badge */
+  .badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold;
+  }
+
+  /* Section spacing */
+  .section {
+    @apply py-12 md:py-16 lg:py-24;
+  }
+}
+
+/* ── Utility Layer ───────────────────────────────────────────────────────── */
+@layer utilities {
+  .text-balance  { text-wrap: balance; }
+  .glass {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  /* Strawberry Matcha Latte gradient — blush top → cream mid → sage bottom */
+  .gradient-hero {
+    background: linear-gradient(180deg,
+      #F3C9C0 0%,
+      #F7DED3 20%,
+      #F3E7D7 40%,
+      #E6E2C4 55%,
+      #D4DCAE 68%,
+      #ADC981 80%,
+      #98C171 90%,
+      #619853 100%
+    );
+  }
+  .gradient-strawberry-matcha {
+    background: linear-gradient(160deg,
+      #F7DED3 0%,
+      #F3E7D7 30%,
+      #E6E2C4 50%,
+      #ADC981 75%,
+      #619853 100%
+    );
+  }
+  .gradient-card {
+    background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.75) 100%);
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
