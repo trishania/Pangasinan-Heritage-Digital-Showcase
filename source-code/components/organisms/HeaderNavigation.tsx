@@ -27,7 +27,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import Link                                         from "next/link";
-import Image                                        from "next/image";
+import { LogoImage }                                from "@/components/atoms/LogoImage";
 import { usePathname }                              from "next/navigation";
 import { NavigationItem, type NavItem }             from "@/components/molecules/NavigationItem";
 import { Button }                                   from "@/components/atoms/Button";
@@ -123,7 +123,7 @@ export const HeaderNavigation: React.FC = () => {
             >
               {/* Logo mark */}
               <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform duration-200">
-                <Image 
+                <LogoImage 
                   src="/logo/PHLOGO.png" 
                   alt="Pangasinan Heritage Logo" 
                   width={40} 

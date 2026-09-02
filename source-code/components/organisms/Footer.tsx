@@ -7,10 +7,10 @@
 
 "use client";
 
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { Icon } from "@/components/atoms/Icon";
+import { FC }                           from "react";
+import Link                             from "next/link";
+import { LogoImage }                    from "@/components/atoms/LogoImage";
+import { Icon }                         from "@/components/atoms/Icon";
 import { Heading, Body } from "@/components/atoms/Typography";
 
 const FOOTER_LINKS = [
@@ -35,7 +35,7 @@ export const Footer: React.FC = () => (
           <div className="flex items-center gap-2.5">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden"
               style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.15)" }}>
-              <Image
+              <LogoImage
                 src="/logo/PHLOGO.png"
                 alt="Pangasinan Heritage Logo"
                 width={40}
