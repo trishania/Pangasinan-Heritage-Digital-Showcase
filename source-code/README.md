@@ -1,4 +1,4 @@
-Pangasinan Heritage
+# Pangasinan Heritage
 
 Student Name: Trishania Neri Marcilla
 Selected Framework: Next.js (React)
