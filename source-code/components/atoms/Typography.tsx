@@ -128,7 +128,7 @@ export const Label: React.FC<LabelProps> = ({
 );
 
 // ── Caption ───────────────────────────────────────────────────────────────────
-interface CaptionProps extends React.HTMLAttributes<HTMLSpanElement> {}
+type CaptionProps = React.HTMLAttributes<HTMLSpanElement>;
 
 /**
  * Caption Atom — small descriptive text (image captions, metadata).
@@ -157,7 +157,7 @@ const tagColors: Record<string, string> = {
 
 /**
  * TagLabel Atom — category / chip badge on cards.
- * @example <TagLabel color="ocean">Coastal</TagLabel>
+ * @example <TagLabel color="sage">Historical</TagLabel>
  */
 export const TagLabel: React.FC<TagLabelProps> = ({
   color = "primary",
@@ -177,4 +177,5 @@ export const TagLabel: React.FC<TagLabelProps> = ({
   </span>
 );
 
-export default { Heading, Body, Label, Caption, TagLabel };
+const TypographyComponents = { Heading, Body, Label, Caption, TagLabel };
+export default TypographyComponents;

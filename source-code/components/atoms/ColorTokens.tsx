@@ -1,3 +1,4 @@
+"use client";
 /**
  * ATOM: ColorTokens
  * -----------------
@@ -99,7 +100,6 @@ export type CreamShade   = keyof typeof COLOR_TOKENS.cream;
 export type NeutralShade = keyof typeof COLOR_TOKENS.neutral;
 
 // ── Swatch component (design system preview use only) ────────────────────────
-"use client";
 import React from "react";
 
 interface SwatchProps {
