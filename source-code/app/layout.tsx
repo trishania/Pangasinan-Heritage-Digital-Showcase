@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { HeaderNavigation } from "@/components/organisms/HeaderNavigation";
@@ -22,7 +22,15 @@ const playfair = Playfair_Display({
 });
 
 // ── SEO Metadata ───────────────────────────────────────────────────────────────
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#619853",
+};
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://trishania.github.io/Pangasinan-Heritage-Digital-Showcase"),
   title: {
     default:  "Pangasinan Heritage | Discover Iconic Cultural Sites",
     template: "%s | Pangasinan Heritage",
@@ -40,7 +48,7 @@ export const metadata: Metadata = {
   openGraph: {
     type:        "website",
     locale:      "en_PH",
-    url:         "https://pangasinan-heritage.vercel.app",
+    url:         "https://trishania.github.io/Pangasinan-Heritage-Digital-Showcase",
     title:       "Pangasinan Heritage | Discover Iconic Cultural Sites",
     description: "Explore Pangasinan's most iconic heritage sites and natural wonders.",
     siteName:    "Pangasinan Heritage",
@@ -52,7 +60,6 @@ export const metadata: Metadata = {
     description: "Explore Pangasinan's most iconic heritage sites and natural wonders.",
     images:      ["/og-image.jpg"],
   },
-  viewport: "width=device-width, initial-scale=1, viewport-fit=cover",
   robots:   { index: true, follow: true },
 };
 
