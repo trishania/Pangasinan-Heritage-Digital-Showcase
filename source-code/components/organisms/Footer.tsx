@@ -7,7 +7,6 @@
 
 "use client";
 
-import { FC }                           from "react";
 import Link                             from "next/link";
 import { LogoImage }                    from "@/components/atoms/LogoImage";
 import { Icon }                         from "@/components/atoms/Icon";

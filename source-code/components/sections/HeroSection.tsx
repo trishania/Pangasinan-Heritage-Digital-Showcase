@@ -58,7 +58,6 @@ export const HeroSection: React.FC = () => {
           {/* Faded Background Logo Watermark */}
           <div className="absolute inset-x-0 -top-10 bottom-0 flex items-center justify-center -z-10 pointer-events-none select-none opacity-50">
             <div className="w-[300px] h-[300px] md:w-[400px] md:h-[400px] relative">
-// Delete original Image usage and use LogoImage
               <LogoImage
                 src="/logo/PHLOGO.png"
                 alt="Pangasinan Heritage Logo Watermark"
