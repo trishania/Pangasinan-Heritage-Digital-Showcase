@@ -1,58 +1,30 @@
-"use client";
-
-import React, { useState, useMemo } from "react";
-import { HeroSection }               from "@/components/sections/HeroSection";
-import { AboutSection }              from "@/components/sections/AboutSection";
-import { ContactSection }            from "@/components/sections/ContactSection";
-import { SearchForm }                from "@/components/molecules/SearchForm";
-import { HeritageGrid }              from "@/components/organisms/HeritageGrid";
-import { Heading, Body }             from "@/components/atoms/Typography";
-import { Icon }                      from "@/components/atoms/Icon";
-import { HERITAGE_SITES }            from "@/data/heritageSites";
-import type { HeritageCategory }     from "@/components/molecules/HeritageCard";
-
 /**
  * Homepage — root page for the Pangasinan Heritage Digital Showcase.
  *
  * Sections:
- *  1. HeroSection           — full-viewport hero with CTAs
- *  2. Heritage Sites section — SearchForm + HeritageGrid (filterable)
- *  3. AboutSection          — mission / highlights
- *  4. ContactSection        — visit / contact cards
+ *  1. HeroSection           — full-viewport hero with CTAs (Server Component)
+ *  2. Heritage Sites section — static header + InteractiveSites client island
+ *  3. AboutSection          — lazy-loaded below-fold (dynamic import)
+ *  4. ContactSection        — lazy-loaded below-fold (dynamic import)
  *
  * Performance:
- *  - "use client" only on this page for interactive filtering
- *  - All below-fold images lazy-loaded via HeritageCard[lazy=true]
- *  - Font preloaded via layout.tsx
+ *  - This page is a Server Component — zero client JS for the page shell
+ *  - InteractiveSites owns all search/filter/pagination state ("use client")
+ *  - AboutSection and ContactSection deferred via dynamic() — below the fold
  */
 
+import dynamic from "next/dynamic";
+import { HeroSection }      from "@/components/sections/HeroSection";
+import { InteractiveSites } from "@/components/organisms/InteractiveSites";
+import { Heading, Body }    from "@/components/atoms/Typography";
+import { Icon }             from "@/components/atoms/Icon";
+import { HERITAGE_SITES }   from "@/data/heritageSites";
+
+// Lazy-load below-fold sections — not visible on initial viewport
+const AboutSection   = dynamic(() => import("@/components/sections/AboutSection"),   { ssr: true });
+const ContactSection = dynamic(() => import("@/components/sections/ContactSection"), { ssr: true });
+
 export default function HomePage() {
-  const [query,    setQuery]    = useState("");
-  const [category, setCategory] = useState<HeritageCategory | "All">("All");
-
-  // Derived: filter sites by query AND category
-  const filteredSites = useMemo(() => {
-    const q = query.toLowerCase().trim();
-    return HERITAGE_SITES.filter((site) => {
-      const matchesQuery =
-        !q ||
-        site.name.toLowerCase().includes(q) ||
-        site.location.toLowerCase().includes(q) ||
-        site.description.toLowerCase().includes(q) ||
-        site.category.toLowerCase().includes(q);
-
-      const matchesCategory =
-        category === "All" || site.category === category;
-
-      return matchesQuery && matchesCategory;
-    });
-  }, [query, category]);
-
-  const handleReset = () => {
-    setQuery("");
-    setCategory("All");
-  };
-
   return (
     <>
       {/* 1. Hero */}
@@ -65,7 +37,7 @@ export default function HomePage() {
         className="section bg-neutral-50"
       >
         <div className="container-site space-y-8">
-          {/* Section header */}
+          {/* Section header — pure static HTML, no client JS */}
           <div className="text-center max-w-2xl mx-auto">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary-50 border border-primary-100 mb-4">
               <Icon name="compass" size="sm" className="text-primary-600" />
@@ -77,34 +49,20 @@ export default function HomePage() {
               Pangasinan Heritage Sites
             </Heading>
             <Body size="base" muted>
-              Discover three of Pangasinan&rsquo;s most beloved destinations. Search or filter by
+              Discover Pangasinan&rsquo;s most beloved destinations. Search or filter by
               category to find your next adventure.
             </Body>
           </div>
 
-          {/* Search & filter */}
-          <div className="max-w-3xl mx-auto">
-            <SearchForm
-              query={query}
-              onQueryChange={setQuery}
-              selectedCategory={category}
-              onCategoryChange={setCategory}
-              resultCount={filteredSites.length}
-            />
-          </div>
-
-          {/* Heritage grid */}
-          <HeritageGrid
-            sites={filteredSites}
-            onReset={handleReset}
-          />
+          {/* Client island: search + filter + paginated grid */}
+          <InteractiveSites sites={HERITAGE_SITES} />
         </div>
       </section>
 
-      {/* 3. About */}
+      {/* 3. About — deferred below fold */}
       <AboutSection />
 
-      {/* 4. Contact */}
+      {/* 4. Contact — deferred below fold */}
       <ContactSection />
     </>
   );

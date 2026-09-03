@@ -1,9 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Enable static export for JAMstack/Vercel/Netlify deployment
+  // Enable static export for GitHub Pages deployment
   output: "export",
   basePath: "/Pangasinan-Heritage-Digital-Showcase",
   assetPrefix: "/Pangasinan-Heritage-Digital-Showcase",
+  trailingSlash: true,
 
   // Optimize images (formats automatically handled for static export)
   images: {
@@ -21,7 +22,12 @@ const nextConfig = {
 
   // Experimental features for performance
   experimental: {
-    optimizePackageImports: ["react-icons"],
+    optimizePackageImports: ["react-icons", "next"],
+  },
+
+  // Expose base path to components that need it for raw <img> tags
+  env: {
+    NEXT_PUBLIC_BASE_PATH: "/Pangasinan-Heritage-Digital-Showcase",
   },
 
   // Production browser source maps disabled for smaller bundle

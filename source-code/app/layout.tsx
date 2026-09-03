@@ -18,7 +18,7 @@ const playfair = Playfair_Display({
   display:  "swap",
   preload:  true,
   weight:   ["400", "600", "700"],
-  style:    ["normal", "italic"],
+  style:    ["normal"],
 });
 
 // ── SEO Metadata ───────────────────────────────────────────────────────────────
