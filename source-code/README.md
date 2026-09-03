@@ -1,8 +1,8 @@
 # Pangasinan Heritage Digital Showcase
 
-**Student Name:** Trishania Neri Marcilla  
-**Selected Framework:** Next.js (React)  
-**Live Website:** [https://trishania.github.io/Pangasinan-Heritage-Digital-Showcase/]
+Student Name: Trishania Neri Marcilla  
+Selected Framework: Next.js (React)  
+Live Website: [https://trishania.github.io/Pangasinan-Heritage-Digital-Showcase/]
 
 ---
 
@@ -11,8 +11,8 @@
 ## 🚀 Quick Start
 
 ### Prerequisites
-- **Node.js** ≥ 18.17.0
-- **npm** ≥ 9 (or **pnpm** ≥ 8 / **yarn** ≥ 1.22)
+- Node.js ≥ 18.17.0
+- npm ≥ 9 (or pnpm ≥ 8 / yarn ≥ 1.22)
 
 ### Install dependencies
 
@@ -102,9 +102,9 @@ source-code/
 
 | Level | Components |
 |-------|-----------|
-| **Atoms** | `Button` · `Typography` (Heading, Body, Label, Caption, TagLabel) · `ColorTokens` · `Icon` · `Image` (HeritageImage) |
-| **Molecules** | `HeritageCard` · `SearchForm` · `NavigationItem` |
-| **Organisms** | `HeritageGrid` · `HeaderNavigation` · `Footer` |
+| Atoms | `Button` · `Typography` (Heading, Body, Label, Caption, TagLabel) · `ColorTokens` · `Icon` · `Image` (HeritageImage) |
+| Molecules | `HeritageCard` · `SearchForm` · `NavigationItem` |
+| Organisms | `HeritageGrid` · `HeaderNavigation` · `Footer` |
 
 ### Color Tokens
 
@@ -144,22 +144,22 @@ source-code/
 
 ## 🌐 Deployment
 
-This project is configured for **static export** (`output: "export"` in `next.config.mjs`).
+This project is configured for static export (`output: "export"` in `next.config.mjs`).
 
-**Deploy to Vercel:**
+Deploy to Vercel:
 ```bash
 npx vercel deploy
 ```
 
-**Deploy to Netlify:** Push to GitHub and connect via Netlify dashboard. Build command: `npm run build`, Publish directory: `out`.
+Deploy to Netlify: Push to GitHub and connect via Netlify dashboard. Build command: `npm run build`, Publish directory: `out`.
 
 ---
 
 ## 📝 Tech Stack
 
-- **Framework**: Next.js 14 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS v3 + CSS Custom Properties
-- **Font**: Inter (body) + Playfair Display (headings) via `next/font`
-- **Icons**: Inline SVG (zero dependencies)
-- **Deployment**: Static export (JAMstack-compatible)
+- Framework: Next.js 14 (App Router)
+- Language: TypeScript
+- Styling: Tailwind CSS v3 + CSS Custom Properties
+- Font: Inter (body) + Playfair Display (headings) via `next/font`
+- Icons: Inline SVG (zero dependencies)
+- Deployment: Static export (JAMstack-compatible)
