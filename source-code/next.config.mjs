@@ -1,3 +1,9 @@
+import withBundleAnalyzer from '@next/bundle-analyzer';
+
+const analyzer = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Enable static export for GitHub Pages deployment
@@ -23,6 +29,7 @@ const nextConfig = {
   // Experimental features for performance
   experimental: {
     optimizePackageImports: ["react-icons", "next"],
+    optimizeCss: true,
   },
 
   // Expose base path to components that need it for raw <img> tags
@@ -34,4 +41,4 @@ const nextConfig = {
   productionBrowserSourceMaps: false,
 };
 
-export default nextConfig;
+export default analyzer(nextConfig);

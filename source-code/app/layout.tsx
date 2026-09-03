@@ -76,6 +76,13 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        {/* LCP Preload for Hero Logo */}
+        <link
+          rel="preload"
+          as="image"
+          href="https://trishania.github.io/Pangasinan-Heritage-Digital-Showcase/logo/PHLOGO-opt.webp"
+          fetchPriority="high"
+        />
         {/* Theme color for mobile browser chrome */}
         <meta name="theme-color" content="#619853" />
       </head>

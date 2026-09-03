@@ -15,7 +15,7 @@
 
 import dynamic from "next/dynamic";
 import { HeroSection }      from "@/components/sections/HeroSection";
-import { InteractiveSites } from "@/components/organisms/InteractiveSites";
+
 import { Heading, Body }    from "@/components/atoms/Typography";
 import { Icon }             from "@/components/atoms/Icon";
 import { HERITAGE_SITES }   from "@/data/heritageSites";
@@ -23,6 +23,7 @@ import { HERITAGE_SITES }   from "@/data/heritageSites";
 // Lazy-load below-fold sections — not visible on initial viewport
 const AboutSection   = dynamic(() => import("@/components/sections/AboutSection"),   { ssr: true });
 const ContactSection = dynamic(() => import("@/components/sections/ContactSection"), { ssr: true });
+const InteractiveSites = dynamic(() => import("@/components/organisms/InteractiveSites"), { ssr: false });
 
 export default function HomePage() {
   return (

@@ -52,7 +52,7 @@ export const HeroSection: React.FC = () => {
           <div className="absolute inset-x-0 -top-10 bottom-0 flex items-center justify-center -z-10 pointer-events-none select-none opacity-50">
             <div className="w-[300px] h-[300px] md:w-[400px] md:h-[400px] relative">
               <LogoImage
-                src="https://trishania.github.io/Pangasinan-Heritage-Digital-Showcase/logo/PHLOGO.webp"
+                src="https://trishania.github.io/Pangasinan-Heritage-Digital-Showcase/logo/PHLOGO-opt.webp"
                 alt="Pangasinan Heritage Logo Watermark"
                 fill
                 className="object-contain"
