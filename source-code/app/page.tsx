@@ -23,7 +23,7 @@ import { HERITAGE_SITES }   from "@/data/heritageSites";
 // Lazy-load below-fold sections — not visible on initial viewport
 const AboutSection   = dynamic(() => import("@/components/sections/AboutSection"),   { ssr: true });
 const ContactSection = dynamic(() => import("@/components/sections/ContactSection"), { ssr: true });
-const InteractiveSites = dynamic(() => import("@/components/organisms/InteractiveSites"), { ssr: false });
+const InteractiveSites = dynamic(() => import("@/components/organisms/InteractiveSites"), { ssr: true });
 
 export default function HomePage() {
   return (

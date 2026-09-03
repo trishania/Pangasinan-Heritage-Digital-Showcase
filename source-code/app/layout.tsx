@@ -76,12 +76,13 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        {/* LCP Preload for Hero Logo */}
+        {/* Preload — hero watermark logo (LCP region) */}
         <link
           rel="preload"
           as="image"
           href="https://trishania.github.io/Pangasinan-Heritage-Digital-Showcase/logo/PHLOGO-opt.webp"
-          fetchPriority="high"
+          // @ts-expect-error fetchpriority is valid HTML5 but not in React types yet
+          fetchpriority="high"
         />
         {/* Theme color for mobile browser chrome */}
         <meta name="theme-color" content="#619853" />

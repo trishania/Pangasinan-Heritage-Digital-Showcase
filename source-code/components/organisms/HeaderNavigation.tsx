@@ -124,7 +124,7 @@ export const HeaderNavigation: React.FC = () => {
               {/* Logo mark */}
               <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform duration-200">
                 <LogoImage 
-                  src="https://trishania.github.io/Pangasinan-Heritage-Digital-Showcase/logo/PHLOGO.webp" 
+                  src="https://trishania.github.io/Pangasinan-Heritage-Digital-Showcase/logo/PHLOGO-nav.webp" 
                   alt="Pangasinan Heritage Logo" 
                   width={40} 
                   height={40} 

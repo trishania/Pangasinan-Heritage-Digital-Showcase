@@ -1,23 +1,19 @@
 /**
- * SECTION: HeroSection
- * --------------------
- * Full-viewport hero with headline, sub-copy, and two CTA buttons.
- * Pure CSS fade-in animation — no useState/useEffect needed.
- * Runs as a Server Component (Client Components are the CTA buttons only
- * via the Button atom which already handles its own interactivity).
+ * SECTION: HeroSection  (SERVER COMPONENT)
+ * -----------------------------------------
+ * Full-viewport hero with headline, sub-copy, and CTA buttons.
+ * Runs as a Server Component so the h1 LCP element renders immediately
+ * without waiting for JS hydration.
  *
- * NOTE: The scroll-to-section onClick handlers on Button require "use client".
- * We keep "use client" here because of the onClick scroll handlers on the
- * two CTA buttons. The animation is now CSS-only (no JS timer).
+ * Only the CTA scroll-buttons are client JS (via HeroCTAs island).
+ * The logo watermark and all text are pure static HTML.
  */
-
-"use client";
 
 import React from "react";
 import { Heading, Body }  from "@/components/atoms/Typography";
-import { Button }         from "@/components/atoms/Button";
 import { Icon }           from "@/components/atoms/Icon";
 import { LogoImage }      from "@/components/atoms/LogoImage";
+import { HeroCTAs }       from "@/components/atoms/HeroCTAs";
 
 export const HeroSection: React.FC = () => {
   return (
@@ -70,7 +66,7 @@ export const HeroSection: React.FC = () => {
             </span>
           </div>
 
-          {/* Main heading */}
+          {/* Main heading — this is the LCP element */}
           <Heading
             as="h1"
             id="hero-heading"
@@ -90,31 +86,8 @@ export const HeroSection: React.FC = () => {
             natural and cultural splendor.
           </Body>
 
-          {/* CTA group */}
-          <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
-            <Button
-              variant="primary"
-              size="lg"
-              iconRight={<Icon name="arrow-right" size="md" />}
-              onClick={() =>
-                document.getElementById("sites")?.scrollIntoView({ behavior: "smooth" })
-              }
-              className="shadow-lg hover:shadow-xl transition-shadow w-full sm:w-auto"
-            >
-              Explore Heritage Sites
-            </Button>
-            <Button
-              variant="ghost"
-              size="lg"
-              iconLeft={<Icon name="info" size="md" />}
-              onClick={() =>
-                document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })
-              }
-              className="text-primary-800 border-primary-300 hover:bg-primary-50/60 w-full sm:w-auto"
-            >
-              Learn More
-            </Button>
-          </div>
+          {/* CTA group — client island (only scroll-buttons need JS) */}
+          <HeroCTAs />
 
           {/* Stats row — slightly delayed fade-in */}
           <div className="flex flex-col xs:flex-row justify-center gap-6 xs:gap-10 pt-6 animate-hero-delayed">
