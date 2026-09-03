@@ -1,8 +1,8 @@
-# Pangasinan Heritage
+# Pangasinan Heritage Digital Showcase
 
 **Student Name:** Trishania Neri Marcilla  
 **Selected Framework:** Next.js (React)  
-**Live Website:** [Insert GitHub Pages URL Here]  
+**Live Website:** [https://trishania.github.io/Pangasinan-Heritage-Digital-Showcase/]
 
 ---
 

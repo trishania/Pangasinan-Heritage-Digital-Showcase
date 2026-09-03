@@ -76,11 +76,8 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        {/* Preconnect to Google Fonts CDN */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* Theme color for mobile browser chrome */}
-        <meta name="theme-color" content="#16a34a" />
+        <meta name="theme-color" content="#619853" />
       </head>
       <body className="min-h-screen flex flex-col bg-neutral-50 antialiased">
         <HeaderNavigation />

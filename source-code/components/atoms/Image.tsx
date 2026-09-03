@@ -1,13 +1,11 @@
 /**
- * ATOM: Image
- * -----------
+ * ATOM: HeritageImage
+ * -------------------
  * Wrapper around Next.js <Image> with:
  *   - Lazy loading (default loading="lazy")
  *   - Aspect-ratio container for CLS prevention
  *   - Accessible alt text enforcement
- *   - Two-step graceful fallback:
- *       1st failure → retries with raw GitHub URL
- *       2nd failure → shows "Image unavailable" placeholder
+ *   - Graceful "Image unavailable" placeholder on error
  *   - Blur placeholder for perceived performance
  */
 
@@ -16,17 +14,6 @@
 import React, { useState, useEffect } from "react";
 import NextImage, { ImageProps as NextImageProps } from "next/image";
 import { cn } from "@/lib/utils";
-
-// ── GitHub raw fallback base URL ──────────────────────────────────────────────
-// If the local /images/... path fails (e.g. on GitHub Pages with basePath),
-// we automatically retry using the raw GitHub URL of the same file.
-const GITHUB_RAW_BASE =
-  "https://github.com/trishania/Pangasinan-Heritage-Digital-Showcase/blob/main/source-code/public";
-
-function toGithubRaw(src: string): string {
-  // src is e.g. "/images/banaan-provincial-museum.png"
-  return `${GITHUB_RAW_BASE}${src}?raw=true`;
-}
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 export type AspectRatio = "1/1" | "4/3" | "16/9" | "3/2" | "2/3" | "21/9";
@@ -68,23 +55,15 @@ export const HeritageImage: React.FC<HeritageImageProps> = ({
   ...props
 }) => {
   const originalSrc = src as string;
-  const [currentSrc, setCurrentSrc] = useState<string>(originalSrc);
-  const [hasError, setHasError]   = useState(false);
+  const [hasError, setHasError] = useState(false);
 
-  // Reset state if the src prop changes (different card)
+  // Reset error state if the src prop changes (different card)
   useEffect(() => {
-    setCurrentSrc(originalSrc);
     setHasError(false);
   }, [originalSrc]);
 
   const handleError = () => {
-    if (currentSrc === originalSrc) {
-      // First failure — retry with raw GitHub URL
-      setCurrentSrc(toGithubRaw(originalSrc));
-    } else {
-      // Second failure — show unavailable placeholder
-      setHasError(true);
-    }
+    setHasError(true);
   };
 
   return (
@@ -92,7 +71,7 @@ export const HeritageImage: React.FC<HeritageImageProps> = ({
       {/* Aspect-ratio container prevents CLS */}
       <div className={cn("relative w-full overflow-hidden", aspectMap[aspectRatio])}>
         {hasError ? (
-          // Final graceful fallback
+          // Graceful fallback — shown when image fails to load
           <div
             className="absolute inset-0 flex items-center justify-center"
             style={{ background: fallbackBg }}
@@ -103,8 +82,7 @@ export const HeritageImage: React.FC<HeritageImageProps> = ({
           </div>
         ) : (
           <NextImage
-            key={currentSrc}   // Forces re-mount when src changes
-            src={currentSrc}
+            src={originalSrc}
             alt={alt}
             fill
             loading={priority ? undefined : "lazy"}
@@ -132,4 +110,3 @@ export const HeritageImage: React.FC<HeritageImageProps> = ({
 };
 
 export default HeritageImage;
-

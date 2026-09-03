@@ -2,26 +2,24 @@
  * SECTION: HeroSection
  * --------------------
  * Full-viewport hero with headline, sub-copy, and two CTA buttons.
- * Uses gradient-hero utility + parallax-light fade animation on mount.
+ * Pure CSS fade-in animation — no useState/useEffect needed.
+ * Runs as a Server Component (Client Components are the CTA buttons only
+ * via the Button atom which already handles its own interactivity).
+ *
+ * NOTE: The scroll-to-section onClick handlers on Button require "use client".
+ * We keep "use client" here because of the onClick scroll handlers on the
+ * two CTA buttons. The animation is now CSS-only (no JS timer).
  */
 
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { Heading, Body }              from "@/components/atoms/Typography";
-import { Button }                     from "@/components/atoms/Button";
-import { Icon }                       from "@/components/atoms/Icon";
-import { LogoImage }                  from "@/components/atoms/LogoImage";
+import React from "react";
+import { Heading, Body }  from "@/components/atoms/Typography";
+import { Button }         from "@/components/atoms/Button";
+import { Icon }           from "@/components/atoms/Icon";
+import { LogoImage }      from "@/components/atoms/LogoImage";
 
 export const HeroSection: React.FC = () => {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    // Triggers fade-in animation on mount
-    const t = setTimeout(() => setVisible(true), 50);
-    return () => clearTimeout(t);
-  }, []);
-
   return (
     <section
       aria-labelledby="hero-heading"
@@ -47,19 +45,14 @@ export const HeroSection: React.FC = () => {
 
       {/* ── Hero content ────────────────────────────────────────── */}
       <div className="container-site relative z-10 py-20 md:py-28">
-        <div
-          className="max-w-3xl mx-auto text-center space-y-6 md:space-y-8 relative"
-          style={{
-            opacity:    visible ? 1 : 0,
-            transform:  visible ? "translateY(0)" : "translateY(24px)",
-            transition: "opacity 0.7s ease-out, transform 0.7s ease-out",
-          }}
-        >
+        {/* CSS fade-slide-up on mount — no JS timer needed */}
+        <div className="max-w-3xl mx-auto text-center space-y-6 md:space-y-8 relative animate-hero">
+
           {/* Faded Background Logo Watermark */}
           <div className="absolute inset-x-0 -top-10 bottom-0 flex items-center justify-center -z-10 pointer-events-none select-none opacity-50">
             <div className="w-[300px] h-[300px] md:w-[400px] md:h-[400px] relative">
               <LogoImage
-                src="/logo/PHLOGO.png"
+                src="/logo/PHLOGO.webp"
                 alt="Pangasinan Heritage Logo Watermark"
                 fill
                 className="object-contain"
@@ -123,11 +116,8 @@ export const HeroSection: React.FC = () => {
             </Button>
           </div>
 
-          {/* Stats row */}
-          <div
-            className="flex flex-col xs:flex-row justify-center gap-6 xs:gap-10 pt-6"
-            style={{ opacity: visible ? 1 : 0, transition: "opacity 0.7s 0.3s ease-out" }}
-          >
+          {/* Stats row — slightly delayed fade-in */}
+          <div className="flex flex-col xs:flex-row justify-center gap-6 xs:gap-10 pt-6 animate-hero-delayed">
             {[
               { value: "23+", label: "Heritage Sites"   },
               { value: "40+", label: "Islands (HINP)"   },
@@ -142,10 +132,10 @@ export const HeroSection: React.FC = () => {
         </div>
       </div>
 
-      {/* ── Scroll indicator ────────────────────────────────────── */}
+      {/* ── Scroll indicator — CSS-only bounce ──────────────────── */}
       <div
         aria-hidden="true"
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce"
+        className="absolute bottom-8 left-1/2 scroll-bounce"
       >
         <Icon name="chevron-down" size="lg" className="text-primary-600/60" />
       </div>
